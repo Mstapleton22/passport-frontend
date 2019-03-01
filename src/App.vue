@@ -1,16 +1,36 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link>|
+      <router-link to="/about">About</router-link>|
+      <router-link to="/traveler">Travelers</router-link>
     </div>
-    <router-view/>
+    <router-view :travelPassport="travelPassport"/>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      travelPassport: null
+    };
+  },
+  methods: {
+    getTravelers() {
+      fetch("http://localhost:3001/traveler")
+        .then(resp => resp.json())
+        .then(resp => (this.travelPassport = resp));
+    }
+  },
+  mounted() {
+    this.getTravelers();
+  }
+};
+</script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -18,6 +38,7 @@
 }
 #nav {
   padding: 30px;
+  background-color: lightpink;
 }
 
 #nav a {
@@ -26,6 +47,6 @@
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: salmon;
 }
 </style>
